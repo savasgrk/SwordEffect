@@ -1,0 +1,10 @@
+name: BloodThirster
+main: com.BloodThirster.StartUp
+version: 1.0
+commands:
+    givesword:
+      description: Gives a sword.
+      usage: /<command>
+    effectsword:
+      description: Effects the sword.
+      usage: /<command>
