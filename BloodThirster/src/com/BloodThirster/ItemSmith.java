@@ -1,14 +1,22 @@
 package com.BloodThirster;
 
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeModifier;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import com.google.common.collect.Multimap;
 
 
 
@@ -50,14 +58,21 @@ public class ItemSmith
 		String desc=("BloodThirster" +level);
 		return makeItem(m, name, desc, amount);
 	}
-	public ItemStack makeEffectItem(Material m, String name, ArrayList desc, int amount)
+
+	public ItemStack makeEffectItem(Material m, String name, ArrayList desc, Multimap<Attribute, AttributeModifier> attribute, Map<Enchantment, Integer> enchantments, int amount)
 	{
 		ItemStack item = new ItemStack(m, amount);
 		
 		//create the item's meta data (name, lore/desc etc)
 		ItemMeta im= item.getItemMeta();
 		im.setDisplayName(name);
-		
+		im.setAttributeModifiers(attribute);
+		Set<Entry<Enchantment, Integer>> st = enchantments.entrySet();    
+		  
+	       for (Entry<Enchantment, Integer> me:st) 
+	       { 
+	           im.addEnchant(me.getKey(), me.getValue(), true);
+	       } 
 		//creates the lore
 		
 		

@@ -22,12 +22,7 @@ public class BTListener implements Listener
 	public void onPlayerJoin(PlayerJoinEvent event)
 	{
 		Player player= (Player) event.getPlayer();
-		player.sendMessage("hola");
-		
-		ItemStack item=new ItemSmith().buildWeapon(1); //item and amount
-		ItemStack item1=new ItemSmith().LifeSteal(1, 100);
-		player.getInventory().addItem(item);
-		player.getInventory().addItem(item1);
+		player.sendMessage("Welcome");
 	}
 	@EventHandler
 	public void onPlayerAttack(EntityDamageByEntityEvent event)
@@ -43,33 +38,12 @@ public class BTListener implements Listener
 				  while(!temp.isEmpty())
 				  {
 					  String temp2=(String) temp.get(temp.size()-1);
+					  Player playerDamager = (Player) damager;
+					  double damage = event.getDamage();
+					  
 					  if(temp2.contains(bt))
 					  {
-						  String level=temp2.replace(bt, "");
-						  level=level.replace(" ", "");
-						  if(level!=null && level!="" && Essentials.checkIfInteger(level))
-						  {
-							  	int modifier=Integer.parseInt(level)/100;
-							  	Player playerDamager = (Player) damager;
-							    double damage = event.getDamage();
-							    if(playerDamager.getHealth()+(damage*modifier)>playerDamager.getMaxHealth())
-							    {
-							    	playerDamager.setHealth(playerDamager.getMaxHealth());
-							    }
-							    else playerDamager.setHealth(playerDamager.getHealth() + damage*modifier);
-							   
-						  }
-						  else
-						  {
-							  Player playerDamager = (Player) damager;
-							    double damage = event.getDamage();
-							    if(playerDamager.getHealth()+damage/100>playerDamager.getMaxHealth())
-							    {
-							    	playerDamager.setHealth(playerDamager.getMaxHealth());
-							    }
-							    else playerDamager.setHealth(playerDamager.getHealth() + damage/100);
-						  }
-						  
+						  Effects.lifeSteal(playerDamager, damage, temp2, bt);
 					  }
 					  temp.remove(temp.size()-1);
 				  }
